@@ -32,7 +32,6 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, 'Segoe UI', 'Noto Sans Arabic', Arial, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-/* TOP BAR */
 .topbar {
   background: var(--bg2);
   border-bottom: 1px solid var(--border);
@@ -44,16 +43,21 @@ body { font-family: -apple-system, 'Segoe UI', 'Noto Sans Arabic', Arial, sans-s
   position: sticky;
   top: 0;
   z-index: 100;
+  backdrop-filter: blur(8px);
 }
 .topbar-title { font-size: .9rem; font-weight: 700; color: var(--text); }
-.topbar-date { font-size: .8rem; color: var(--text2); }
+.topbar-date { font-size: .8rem; color: var(--text2); background: var(--bg3); padding: 4px 10px; border-radius: 20px; border: 1px solid var(--border); }
 
 .container { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
 
-/* SUMMARY GRID */
+.section-label {
+  font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--text3); margin-bottom: 10px; margin-top: 4px;
+}
+
 .summary-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 12px;
   margin-bottom: 28px;
 }
@@ -65,34 +69,26 @@ body { font-family: -apple-system, 'Segoe UI', 'Noto Sans Arabic', Arial, sans-s
   padding: 14px 16px;
 }
 .summary-brand { font-size: .72rem; color: var(--text2); margin-bottom: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; display: flex; align-items: center; gap: 6px; }
-.summary-logo { height: 18px; width: auto; max-width: 70px; object-fit: contain; }
-.summary-spend { font-size: 1.2rem; font-weight: 700; color: var(--text); letter-spacing: -.02em; }
-.summary-result { font-size: .78rem; color: var(--text2); margin-top: 4px; }
-.summary-delta { font-size: .72rem; font-weight: 600; margin-top: 5px; }
-.delta-up { color: var(--red); }
-.delta-down { color: var(--green); }
+.summary-logo { height: 18px; width: auto; max-width: 80px; object-fit: contain; }
+.summary-spend { font-size: 1.25rem; font-weight: 700; color: var(--text); letter-spacing: -.02em; }
+.summary-result { font-size: .78rem; color: var(--text2); margin-top: 4px; line-height: 1.5; }
+.summary-delta { font-size: .73rem; font-weight: 600; margin-top: 6px; padding: 2px 8px; border-radius: 99px; display: inline-block; }
+.delta-up { background: rgba(248,113,113,.1); color: #fca5a5; border: 1px solid rgba(248,113,113,.2); }
+.delta-down { background: rgba(34,197,94,.1); color: #4ade80; border: 1px solid rgba(34,197,94,.2); }
 .summary-inactive { font-size: .82rem; color: var(--text3); margin-top: 6px; font-style: italic; }
 
-/* SECTION LABEL */
-.section-label {
-  font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
-  color: var(--text3); margin-bottom: 10px; margin-top: 4px;
-}
-
-/* ALERT BOXES */
 .alerts-wrap { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
 .alert {
   display: flex; align-items: flex-start; gap: 10px;
   background: rgba(251,191,36,.06);
-  border: 1px solid rgba(251,191,36,.25);
+  border: 1px solid rgba(251,191,36,.2);
   border-right: 3px solid var(--yellow);
   border-radius: 8px;
   padding: 10px 14px;
-  font-size: .84rem; color: #fde68a;
+  font-size: .84rem; color: #fde68a; line-height: 1.5;
 }
-.alert-icon { flex-shrink: 0; }
+.alert-icon { flex-shrink: 0; margin-top: 1px; }
 
-/* BRAND CARDS */
 .brand-card {
   background: var(--bg2);
   border: 1px solid var(--border);
@@ -101,18 +97,15 @@ body { font-family: -apple-system, 'Segoe UI', 'Noto Sans Arabic', Arial, sans-s
   margin-bottom: 14px;
   overflow: hidden;
 }
-
 .brand-header {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 16px 20px; cursor: pointer; gap: 12px;
+  padding: 16px 20px; cursor: pointer; gap: 12px; user-select: none;
 }
 .brand-header:hover { background: var(--bg3); }
-
 .brand-identity { display: flex; align-items: center; gap: 10px; }
-.brand-logo { height: 28px; width: auto; max-width: 100px; object-fit: contain; }
-.brand-emoji { font-size: 1.3rem; }
+.brand-logo { height: 28px; width: auto; max-width: 110px; object-fit: contain; }
+.brand-emoji { font-size: 1.4rem; }
 .brand-name { font-size: 1rem; font-weight: 700; color: var(--text); }
-
 .brand-pills { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
 .pill { padding: 3px 10px; border-radius: 20px; font-size: .76rem; font-weight: 600; white-space: nowrap; }
 .pill-spend { background: var(--bg3); color: var(--text2); border: 1px solid var(--border); }
@@ -120,64 +113,60 @@ body { font-family: -apple-system, 'Segoe UI', 'Noto Sans Arabic', Arial, sans-s
 .pill-warn { background: rgba(248,113,113,.1); color: #fca5a5; border: 1px solid rgba(248,113,113,.25); }
 .pill-cpr { background: rgba(96,165,250,.08); color: #93c5fd; border: 1px solid rgba(96,165,250,.2); }
 .pill-inactive { background: var(--bg3); color: var(--text3); border: 1px solid var(--border); }
-.chevron { color: var(--text3); transition: transform .2s; flex-shrink: 0; }
+.chevron { color: var(--text3); transition: transform .25s; flex-shrink: 0; font-size: 1rem; }
 .brand-card.open .chevron { transform: rotate(180deg); }
-
 .brand-body { display: none; border-top: 1px solid var(--border); }
 .brand-card.open .brand-body { display: block; }
 
-/* STATS ROW */
 .stats-row {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
   gap: 10px; padding: 16px 20px;
-  background: rgba(255,255,255,.02);
+  background: rgba(255,255,255,.015);
 }
 .stat-box { }
-.stat-lbl { font-size: .69rem; color: var(--text3); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
+.stat-lbl { font-size: .67rem; color: var(--text3); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
 .stat-val { font-size: 1rem; font-weight: 700; color: var(--text); }
-.stat-cpr { font-size: .73rem; color: var(--text2); margin-top: 2px; }
+.stat-cpr { font-size: .72rem; color: var(--text2); margin-top: 2px; }
 
-/* TABLE */
-.table-wrap { padding: 0 20px 20px; overflow-x: auto; }
+.table-wrap { padding: 0 20px 16px; overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; font-size: .83rem; }
 th {
-  text-align: right; font-size: .68rem; font-weight: 700; color: var(--text3);
+  text-align: right; font-size: .67rem; font-weight: 700; color: var(--text3);
   text-transform: uppercase; letter-spacing: .05em;
   padding: 8px 10px; border-bottom: 1px solid var(--border); white-space: nowrap;
 }
 td { padding: 11px 10px; border-bottom: 1px solid rgba(255,255,255,.04); vertical-align: middle; }
+@media (prefers-color-scheme: light) { td { border-bottom-color: var(--border); } }
 tr:last-child td { border-bottom: none; }
 tr:hover td { background: rgba(255,255,255,.015); }
 .camp-name-cell { font-weight: 600; font-size: .85rem; color: var(--text); }
 .camp-obj { font-size: .71rem; color: var(--text3); margin-top: 2px; }
 .num { font-variant-numeric: tabular-nums; }
+.freq-warn { color: var(--red); font-weight: 700; }
 
-/* BADGE */
 .badge { display: inline-block; font-size: .71rem; font-weight: 700; padding: 3px 9px; border-radius: 99px; white-space: nowrap; }
 .badge-green { background: rgba(34,197,94,.12); color: #4ade80; border: 1px solid rgba(34,197,94,.2); }
 .badge-orange { background: rgba(251,191,36,.1); color: #fcd34d; border: 1px solid rgba(251,191,36,.2); }
 .badge-gray { background: var(--bg3); color: var(--text2); border: 1px solid var(--border); }
 
-/* FREQ WARNING */
-.freq-warn { color: var(--red); font-weight: 700; }
-
-/* INSIGHT */
 .insight {
   margin: 0 20px 16px;
   padding: 10px 14px;
   background: rgba(96,165,250,.06);
   border: 1px solid rgba(96,165,250,.15);
   border-radius: 8px;
-  font-size: .81rem; color: #93c5fd;
+  font-size: .81rem; color: #93c5fd; line-height: 1.6;
 }
 
 footer { text-align: center; padding: 32px 0 20px; font-size: .73rem; color: var(--text3); border-top: 1px solid var(--border); margin-top: 16px; }
 footer a { color: #0891b2; text-decoration: none; font-weight: 600; }
+footer a:hover { text-decoration: underline; }
 
 @media (max-width: 600px) {
   .summary-grid { grid-template-columns: 1fr 1fr; }
   .stats-row { grid-template-columns: 1fr 1fr; }
   .topbar-date { display: none; }
+  .brand-pills .pill-cpr { display: none; }
 }
 </style>
 </head>
@@ -185,12 +174,11 @@ footer a { color: #0891b2; text-decoration: none; font-weight: 600; }
 
 <div class="topbar">
   <div class="topbar-title">📊 تقرير الإعلانات &nbsp;|&nbsp; 12 مايو 2026 &nbsp;|&nbsp; Wsool للتسويق والأتمتة</div>
-  <div class="topbar-date">2026-05-13</div>
+  <div class="topbar-date">صدر 2026-05-13</div>
 </div>
 
 <div class="container">
 
-  <!-- Summary Grid -->
   <div class="section-label">ملخص يوم أمس — 12 مايو 2026</div>
   <div class="summary-grid">
 
@@ -203,8 +191,8 @@ footer a { color: #0891b2; text-decoration: none; font-weight: 600; }
         فلوكة
       </div>
       <div class="summary-spend">₺569.35</div>
-      <div class="summary-result">9 محادثات | ₺63.26/محادثة</div>
-      <div class="summary-delta delta-up">↑ 79% vs lifetime ⚠️</div>
+      <div class="summary-result">9 محادثات<br>₺63.26/محادثة</div>
+      <span class="summary-delta delta-up">↑ 79% vs lifetime ⚠️</span>
     </div>
 
     <div class="summary-card" style="--brand-color:#2563eb">
@@ -216,8 +204,8 @@ footer a { color: #0891b2; text-decoration: none; font-weight: 600; }
         Edvion
       </div>
       <div class="summary-spend">₺626.99</div>
-      <div class="summary-result">3 تحويلات | ₺209/تحويل</div>
-      <div class="summary-delta delta-up">↑ 200% vs lifetime ⚠️</div>
+      <div class="summary-result">3 تحويلات<br>₺209/تحويل</div>
+      <span class="summary-delta delta-up">↑ 200% vs lifetime ⚠️</span>
     </div>
 
     <div class="summary-card" style="--brand-color:#7c3aed">
@@ -229,8 +217,8 @@ footer a { color: #0891b2; text-decoration: none; font-weight: 600; }
         مستقبل
       </div>
       <div class="summary-spend">₺393.18</div>
-      <div class="summary-result">4,449 كليك | ₺0.088/كليك</div>
-      <div class="summary-delta delta-down">↓ 35% vs lifetime ✓</div>
+      <div class="summary-result">4,449 كليك<br>₺0.088/كليك</div>
+      <span class="summary-delta delta-down">↓ 35% vs lifetime ✓</span>
     </div>
 
     <div class="summary-card" style="--brand-color:#059669">
@@ -251,26 +239,21 @@ footer a { color: #0891b2; text-decoration: none; font-weight: 600; }
 
   </div>
 
-  <!-- Alerts -->
   <div class="section-label">تنبيهات</div>
   <div class="alerts-wrap">
     <div class="alert">
       <span class="alert-icon">⚠️</span>
-      <div><strong>فلوكة</strong> — CPR المحادثات أمس (₺63.26) أعلى بـ 79% من الـ lifetime المجمّع (₺35.28). يستحق مراجعة الكريتيف.</div>
+      <div><strong>فلوكة — حملة عرض الكيلو فيديو:</strong> Frequency وصل <strong>4.40</strong> → تعب جمهور واضح. CPR المحادثات أمس (₺63.26) أعلى بـ 169% من الـ lifetime لهذه الحملة (₺23.48). يُنصح بتجديد الكريتيف فوراً أو رفع الـ budget لحملة العرب ذات الأداء الأفضل.</div>
     </div>
     <div class="alert">
       <span class="alert-icon">⚠️</span>
-      <div><strong>فلوكة — حملة عرض الكيلو</strong> — Frequency وصل 4.40 → تعب جمهور. يُنصح بتجديد الكريتيف أو توسيع الجمهور.</div>
-    </div>
-    <div class="alert">
-      <span class="alert-icon">⚠️</span>
-      <div><strong>Edvion</strong> — CPR التحويلات أمس (₺209) أعلى بـ 200% من الـ lifetime (₺69.6). يوم ضعيف — راقب يومين قبل التعديل.</div>
+      <div><strong>Edvion — أداء ضعيف:</strong> 3 تحويلات فقط بإنفاق ₺626.99 → CPR أمس (₺209) أعلى بـ <strong>200%</strong> من الـ lifetime المجمّع (₺69.6). راقب يومين إضافيين قبل التعديل — قد يكون تذبذب عادي.</div>
     </div>
   </div>
 
-  <!-- ===== FELUKA ===== -->
+  <!-- FELUKA -->
   <div class="brand-card open" style="--brand-color:#e8a020" id="c-feluka">
-    <div class="brand-header" onclick="document.getElementById('c-feluka').classList.toggle('open')">
+    <div class="brand-header" onclick="toggle('c-feluka')">
       <div class="brand-identity">
         <picture>
           <source srcset="logos/feluka-white.png" media="(prefers-color-scheme: dark)">
@@ -292,7 +275,7 @@ footer a { color: #0891b2; text-decoration: none; font-weight: 600; }
           <div class="stat-val num">₺569.35</div>
         </div>
         <div class="stat-box">
-          <div class="stat-lbl">الوصول</div>
+          <div class="stat-lbl">Reach</div>
           <div class="stat-val num">5,525</div>
         </div>
         <div class="stat-box">
@@ -336,7 +319,7 @@ footer a { color: #0891b2; text-decoration: none; font-weight: 600; }
             <tr>
               <td>
                 <div class="camp-name-cell">حملات للعرب في إسطنبول</div>
-                <div class="camp-obj">تفاعل (رسائل)</div>
+                <div class="camp-obj">تفاعل — رسائل</div>
               </td>
               <td class="num">₺39,608</td>
               <td class="num">856</td>
@@ -347,7 +330,7 @@ footer a { color: #0891b2; text-decoration: none; font-weight: 600; }
             <tr>
               <td>
                 <div class="camp-name-cell">حملة عرض الكيلو فيديو</div>
-                <div class="camp-obj">تفاعل (رسائل)</div>
+                <div class="camp-obj">تفاعل — رسائل</div>
               </td>
               <td class="num">₺18,739</td>
               <td class="num">798</td>
@@ -359,14 +342,14 @@ footer a { color: #0891b2; text-decoration: none; font-weight: 600; }
         </table>
       </div>
       <div class="insight">
-        💡 CPR المحادثات أمس (₺63.26) أعلى بـ 79% من الـ lifetime المجمّع (₺35.28). حملة الكيلو freq=4.4 — ابدأ باختبار كريتيف جديد وفكّر في توسيع الجمهور لتخفيف التعب.
+        💡 حملة الكيلو تعبت — freq 4.4 مع CPR مرتفع جداً أمس. جرّب كريتيف جديد أو وسّع الجمهور. حملة العرب ما زالت في المدى الطبيعي (freq 3.47) وأداءها lifetime أفضل نسبياً.
       </div>
     </div>
   </div>
 
-  <!-- ===== EDVION ===== -->
+  <!-- EDVION -->
   <div class="brand-card open" style="--brand-color:#2563eb" id="c-edvion">
-    <div class="brand-header" onclick="document.getElementById('c-edvion').classList.toggle('open')">
+    <div class="brand-header" onclick="toggle('c-edvion')">
       <div class="brand-identity">
         <picture>
           <source srcset="logos/edvion-light.png" media="(prefers-color-scheme: dark)">
@@ -388,8 +371,12 @@ footer a { color: #0891b2; text-decoration: none; font-weight: 600; }
           <div class="stat-val num">₺626.99</div>
         </div>
         <div class="stat-box">
-          <div class="stat-lbl">الوصول</div>
+          <div class="stat-lbl">Reach</div>
           <div class="stat-val num">25,582</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-lbl">Impressions</div>
+          <div class="stat-val num">26,643</div>
         </div>
         <div class="stat-box">
           <div class="stat-lbl">تحويلات</div>
@@ -466,14 +453,14 @@ footer a { color: #0891b2; text-decoration: none; font-weight: 600; }
         </table>
       </div>
       <div class="insight">
-        💡 3 تحويلات فقط أمس بـ 42 كليك و7 LPV فقط → معدل تحويل الموقع 16% (ضعيف). الكليكات جيدة لكن الموقع لا يحوّل. تحقق من سرعة الـ landing page وتجربة المستخدم.
+        💡 42 كليك → 7 LPV → 3 تحويلات فقط أمس. معدل LPV/كليك = 17% ضعيف. تحقق من سرعة الـ landing page وتجربة الموبايل. لا تغيّر الحملة الآن — انتظر يومين لترى إذا كان يوم عشوائي.
       </div>
     </div>
   </div>
 
-  <!-- ===== MUSTAKBAL ===== -->
+  <!-- MUSTAKBAL -->
   <div class="brand-card open" style="--brand-color:#7c3aed" id="c-mustakbal">
-    <div class="brand-header" onclick="document.getElementById('c-mustakbal').classList.toggle('open')">
+    <div class="brand-header" onclick="toggle('c-mustakbal')">
       <div class="brand-identity">
         <picture>
           <source srcset="logos/mustakbal-white.png" media="(prefers-color-scheme: dark)">
@@ -495,7 +482,7 @@ footer a { color: #0891b2; text-decoration: none; font-weight: 600; }
           <div class="stat-val num">₺393.18</div>
         </div>
         <div class="stat-box">
-          <div class="stat-lbl">الوصول</div>
+          <div class="stat-lbl">Reach</div>
           <div class="stat-val num">167,870</div>
         </div>
         <div class="stat-box">
@@ -552,7 +539,7 @@ footer a { color: #0891b2; text-decoration: none; font-weight: 600; }
             <tr>
               <td>
                 <div class="camp-name-cell">أول حملة وعي</div>
-                <div class="camp-obj">كليكات</div>
+                <div class="camp-obj">كليكات رابط</div>
               </td>
               <td>Link Clicks</td>
               <td class="num">₺1,716</td>
@@ -565,14 +552,14 @@ footer a { color: #0891b2; text-decoration: none; font-weight: 600; }
         </table>
       </div>
       <div class="insight">
-        💡 أداء استثنائي — كليك بـ ₺0.088 على وصول 167K وهو أفضل بـ 35% من الـ lifetime (₺0.135). فكّر في رفع الميزانية للاستفادة من هذه الكفاءة.
+        💡 أداء استثنائي — كليك بـ ₺0.088 على وصول 167K، أرخص بـ 35% من الـ lifetime (₺0.135). فكّر في رفع الميزانية للاستفادة من هذه الكفاءة العالية اليوم.
       </div>
     </div>
   </div>
 
-  <!-- ===== ADVENTURERS ===== -->
+  <!-- ADVENTURERS -->
   <div class="brand-card" style="--brand-color:#059669" id="c-adv">
-    <div class="brand-header" onclick="document.getElementById('c-adv').classList.toggle('open')">
+    <div class="brand-header" onclick="toggle('c-adv')">
       <div class="brand-identity">
         <span class="brand-emoji">🏕️</span>
         <span class="brand-name">المغامرون</span>
@@ -587,9 +574,9 @@ footer a { color: #0891b2; text-decoration: none; font-weight: 600; }
     </div>
   </div>
 
-  <!-- ===== WSOOL ===== -->
+  <!-- WSOOL -->
   <div class="brand-card" style="--brand-color:#0891b2" id="c-wsool">
-    <div class="brand-header" onclick="document.getElementById('c-wsool').classList.toggle('open')">
+    <div class="brand-header" onclick="toggle('c-wsool')">
       <div class="brand-identity">
         <picture>
           <source srcset="logos/wsool-light.png" media="(prefers-color-scheme: dark)">
@@ -613,5 +600,10 @@ footer a { color: #0891b2; text-decoration: none; font-weight: 600; }
   تصميم وتنفيذ <a href="https://wsool.ai" target="_blank">Wsool للتسويق والأتمتة</a> — wsool.ai
 </footer>
 
+<script>
+function toggle(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+</script>
 </body>
 </html>
