@@ -7,15 +7,16 @@
 <style>
 :root {
   --bg: #090c14;
-  --bg2: #111827;
-  --bg3: #1a2033;
-  --border: #1f2a3d;
+  --bg2: #0f1520;
+  --bg3: #161e30;
+  --border: #1e2a3d;
   --text: #e2e8f0;
   --text2: #94a3b8;
   --text3: #475569;
   --green: #22c55e;
   --red: #f87171;
   --yellow: #fbbf24;
+  --blue: #60a5fa;
 }
 @media (prefers-color-scheme: light) {
   :root {
@@ -29,7 +30,7 @@
   }
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+body { font-family: -apple-system, 'Segoe UI', 'Noto Sans Arabic', Arial, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
 /* TOP BAR */
 .topbar {
@@ -43,322 +44,535 @@ body { font-family: -apple-system, 'Segoe UI', Arial, sans-serif; background: va
   position: sticky;
   top: 0;
   z-index: 100;
-  backdrop-filter: blur(8px);
 }
-.topbar-title { font-size: .9rem; font-weight: 700; color: var(--text); letter-spacing: -.01em; }
+.topbar-title { font-size: .9rem; font-weight: 700; color: var(--text); }
 .topbar-date { font-size: .8rem; color: var(--text2); }
-.topbar-badge {
-  font-size: .7rem;
-  background: #0f2d1a;
-  color: var(--green);
-  border: 1px solid #166534;
-  padding: 3px 10px;
-  border-radius: 20px;
-  font-weight: 600;
-}
 
-.container { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+.container { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
 
-/* SUMMARY ROW */
+/* SUMMARY GRID */
 .summary-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 12px;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 .summary-card {
   background: var(--bg2);
   border: 1px solid var(--border);
   border-top: 3px solid var(--brand-color, #334155);
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 14px 16px;
 }
-.summary-brand { font-size: .72rem; color: var(--text2); margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
-.summary-spend { font-size: 1.1rem; font-weight: 700; color: var(--text); }
-.summary-result { font-size: .78rem; color: var(--green); margin-top: 3px; }
+.summary-brand { font-size: .72rem; color: var(--text2); margin-bottom: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; display: flex; align-items: center; gap: 6px; }
+.summary-logo { height: 18px; width: auto; max-width: 70px; object-fit: contain; }
+.summary-spend { font-size: 1.2rem; font-weight: 700; color: var(--text); letter-spacing: -.02em; }
+.summary-result { font-size: .78rem; color: var(--text2); margin-top: 4px; }
+.summary-delta { font-size: .72rem; font-weight: 600; margin-top: 5px; }
+.delta-up { color: var(--red); }
+.delta-down { color: var(--green); }
+.summary-inactive { font-size: .82rem; color: var(--text3); margin-top: 6px; font-style: italic; }
+
+/* SECTION LABEL */
+.section-label {
+  font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--text3); margin-bottom: 10px; margin-top: 4px;
+}
+
+/* ALERT BOXES */
+.alerts-wrap { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+.alert {
+  display: flex; align-items: flex-start; gap: 10px;
+  background: rgba(251,191,36,.06);
+  border: 1px solid rgba(251,191,36,.25);
+  border-right: 3px solid var(--yellow);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: .84rem; color: #fde68a;
+}
+.alert-icon { flex-shrink: 0; }
 
 /* BRAND CARDS */
 .brand-card {
   background: var(--bg2);
   border: 1px solid var(--border);
+  border-top: 3px solid var(--brand-color, #334155);
   border-radius: 12px;
   margin-bottom: 14px;
   overflow: hidden;
-  transition: box-shadow .2s;
 }
-.brand-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,.25); }
 
 .brand-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px;
-  cursor: pointer;
-  border-bottom: 2px solid var(--brand-color, var(--border));
-  gap: 12px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px; cursor: pointer; gap: 12px;
 }
 .brand-header:hover { background: var(--bg3); }
 
-.brand-identity { display: flex; align-items: center; gap: 12px; }
-.brand-logo { height: 32px; width: auto; max-width: 110px; object-fit: contain; }
-.brand-emoji { font-size: 1.4rem; }
+.brand-identity { display: flex; align-items: center; gap: 10px; }
+.brand-logo { height: 28px; width: auto; max-width: 100px; object-fit: contain; }
+.brand-emoji { font-size: 1.3rem; }
 .brand-name { font-size: 1rem; font-weight: 700; color: var(--text); }
 
 .brand-pills { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
-.pill { padding: 4px 12px; border-radius: 20px; font-size: .78rem; font-weight: 600; white-space: nowrap; }
+.pill { padding: 3px 10px; border-radius: 20px; font-size: .76rem; font-weight: 600; white-space: nowrap; }
 .pill-spend { background: var(--bg3); color: var(--text2); border: 1px solid var(--border); }
-.pill-result { background: #0f2d1a; color: #4ade80; border: 1px solid #166534; }
-.pill-cpr { background: #1a1a2e; color: #818cf8; border: 1px solid #3730a3; }
+.pill-good { background: rgba(34,197,94,.1); color: #4ade80; border: 1px solid rgba(34,197,94,.25); }
+.pill-warn { background: rgba(248,113,113,.1); color: #fca5a5; border: 1px solid rgba(248,113,113,.25); }
+.pill-cpr { background: rgba(96,165,250,.08); color: #93c5fd; border: 1px solid rgba(96,165,250,.2); }
 .pill-inactive { background: var(--bg3); color: var(--text3); border: 1px solid var(--border); }
-
-.chevron { color: var(--text3); font-size: 1.1rem; transition: transform .2s; flex-shrink: 0; }
+.chevron { color: var(--text3); transition: transform .2s; flex-shrink: 0; }
 .brand-card.open .chevron { transform: rotate(180deg); }
-.brand-body { display: none; padding: 16px 20px; }
+
+.brand-body { display: none; border-top: 1px solid var(--border); }
 .brand-card.open .brand-body { display: block; }
 
-/* CAMP TABLE */
-.camp-table { width: 100%; border-collapse: collapse; }
-.camp-table th {
-  text-align: right;
-  font-size: .7rem;
-  font-weight: 600;
-  color: var(--text3);
-  text-transform: uppercase;
-  letter-spacing: .05em;
-  padding: 0 10px 10px;
-  border-bottom: 1px solid var(--border);
+/* STATS ROW */
+.stats-row {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px; padding: 16px 20px;
+  background: rgba(255,255,255,.02);
 }
-.camp-table td { padding: 12px 10px; border-bottom: 1px solid var(--bg3); vertical-align: top; }
-.camp-table tr:last-child td { border-bottom: none; }
-.camp-name { font-size: .87rem; font-weight: 600; color: var(--text); margin-bottom: 2px; }
-.camp-obj { font-size: .73rem; color: var(--text3); }
+.stat-box { }
+.stat-lbl { font-size: .69rem; color: var(--text3); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
+.stat-val { font-size: 1rem; font-weight: 700; color: var(--text); }
+.stat-cpr { font-size: .73rem; color: var(--text2); margin-top: 2px; }
 
-.metric-row { display: flex; gap: 8px; align-items: baseline; margin-bottom: 3px; font-size: .82rem; }
-.metric-label { color: var(--text3); min-width: 70px; font-size: .73rem; }
-.metric-val { color: var(--text2); }
-
-.delta-good { color: var(--green); font-weight: 600; }
-.delta-bad { color: var(--red); font-weight: 600; }
-.delta-ok { color: var(--text2); }
-
-.camp-alert {
-  background: #1a0f00;
-  border: 1px solid #78350f;
-  border-right: 3px solid var(--yellow);
-  border-radius: 6px;
-  padding: 8px 12px;
-  font-size: .82rem;
-  color: var(--yellow);
-  margin-bottom: 10px;
+/* TABLE */
+.table-wrap { padding: 0 20px 20px; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: .83rem; }
+th {
+  text-align: right; font-size: .68rem; font-weight: 700; color: var(--text3);
+  text-transform: uppercase; letter-spacing: .05em;
+  padding: 8px 10px; border-bottom: 1px solid var(--border); white-space: nowrap;
 }
-.no-data { color: var(--text3); font-size: .85rem; padding: 8px 0; }
+td { padding: 11px 10px; border-bottom: 1px solid rgba(255,255,255,.04); vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(255,255,255,.015); }
+.camp-name-cell { font-weight: 600; font-size: .85rem; color: var(--text); }
+.camp-obj { font-size: .71rem; color: var(--text3); margin-top: 2px; }
+.num { font-variant-numeric: tabular-nums; }
 
-footer { text-align: center; padding: 32px 0 20px; font-size: .72rem; color: var(--text3); }
+/* BADGE */
+.badge { display: inline-block; font-size: .71rem; font-weight: 700; padding: 3px 9px; border-radius: 99px; white-space: nowrap; }
+.badge-green { background: rgba(34,197,94,.12); color: #4ade80; border: 1px solid rgba(34,197,94,.2); }
+.badge-orange { background: rgba(251,191,36,.1); color: #fcd34d; border: 1px solid rgba(251,191,36,.2); }
+.badge-gray { background: var(--bg3); color: var(--text2); border: 1px solid var(--border); }
+
+/* FREQ WARNING */
+.freq-warn { color: var(--red); font-weight: 700; }
+
+/* INSIGHT */
+.insight {
+  margin: 0 20px 16px;
+  padding: 10px 14px;
+  background: rgba(96,165,250,.06);
+  border: 1px solid rgba(96,165,250,.15);
+  border-radius: 8px;
+  font-size: .81rem; color: #93c5fd;
+}
+
+footer { text-align: center; padding: 32px 0 20px; font-size: .73rem; color: var(--text3); border-top: 1px solid var(--border); margin-top: 16px; }
+footer a { color: #0891b2; text-decoration: none; font-weight: 600; }
+
+@media (max-width: 600px) {
+  .summary-grid { grid-template-columns: 1fr 1fr; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .topbar-date { display: none; }
+}
 </style>
 </head>
 <body>
 
 <div class="topbar">
-  <div class="topbar-title">📊 تقرير الإعلانات</div>
-  <div class="topbar-date">12 مايو 2026</div>
-  <div class="topbar-badge">Live Data</div>
+  <div class="topbar-title">📊 تقرير الإعلانات &nbsp;|&nbsp; 12 مايو 2026 &nbsp;|&nbsp; Wsool للتسويق والأتمتة</div>
+  <div class="topbar-date">2026-05-13</div>
 </div>
 
 <div class="container">
 
-  <!-- Summary -->
+  <!-- Summary Grid -->
+  <div class="section-label">ملخص يوم أمس — 12 مايو 2026</div>
   <div class="summary-grid">
+
     <div class="summary-card" style="--brand-color:#e8a020">
-      <div class="summary-brand">فلوكة</div>
+      <div class="summary-brand">
+        <picture>
+          <source srcset="logos/feluka-white.png" media="(prefers-color-scheme: dark)">
+          <img src="logos/feluka-color.png" class="summary-logo" alt="فلوكة" onerror="this.style.display='none'">
+        </picture>
+        فلوكة
+      </div>
       <div class="summary-spend">₺569.35</div>
-      <div class="summary-result">9 رسالة | ₺63.26/رسالة</div>
-    </div>    <div class="summary-card" style="--brand-color:#2563eb">
-      <div class="summary-brand">Edvion (Kiief)</div>
+      <div class="summary-result">9 محادثات | ₺63.26/محادثة</div>
+      <div class="summary-delta delta-up">↑ 79% vs lifetime ⚠️</div>
+    </div>
+
+    <div class="summary-card" style="--brand-color:#2563eb">
+      <div class="summary-brand">
+        <picture>
+          <source srcset="logos/edvion-light.png" media="(prefers-color-scheme: dark)">
+          <img src="logos/edvion-dark.png" class="summary-logo" alt="Edvion" onerror="this.style.display='none'">
+        </picture>
+        Edvion
+      </div>
       <div class="summary-spend">₺626.99</div>
-      <div class="summary-result">42 كليك | ₺14.93/كليك</div>
-    </div>    <div class="summary-card" style="--brand-color:#7c3aed">
-      <div class="summary-brand">مستقبل</div>
+      <div class="summary-result">3 تحويلات | ₺209/تحويل</div>
+      <div class="summary-delta delta-up">↑ 200% vs lifetime ⚠️</div>
+    </div>
+
+    <div class="summary-card" style="--brand-color:#7c3aed">
+      <div class="summary-brand">
+        <picture>
+          <source srcset="logos/mustakbal-white.png" media="(prefers-color-scheme: dark)">
+          <img src="logos/mustakbal-color.png" class="summary-logo" alt="مستقبل" onerror="this.style.display='none'">
+        </picture>
+        مستقبل
+      </div>
       <div class="summary-spend">₺393.18</div>
-      <div class="summary-result">7 رسالة | ₺56.17/رسالة</div>
-    </div>    <div class="summary-card" style="--brand-color:#059669">
-      <div class="summary-brand">المغامرون</div>
-      <div class="summary-spend">₺0</div>
-      <div class="summary-result">لا إنفاق</div>
-    </div>    <div class="summary-card" style="--brand-color:#0891b2">
-      <div class="summary-brand">Wsool وصول</div>
-      <div class="summary-spend">₺0</div>
-      <div class="summary-result">لا إنفاق</div>
+      <div class="summary-result">4,449 كليك | ₺0.088/كليك</div>
+      <div class="summary-delta delta-down">↓ 35% vs lifetime ✓</div>
+    </div>
+
+    <div class="summary-card" style="--brand-color:#059669">
+      <div class="summary-brand">🏕️ المغامرون</div>
+      <div class="summary-inactive">لا إنفاق أمس</div>
+    </div>
+
+    <div class="summary-card" style="--brand-color:#0891b2">
+      <div class="summary-brand">
+        <picture>
+          <source srcset="logos/wsool-light.png" media="(prefers-color-scheme: dark)">
+          <img src="logos/wsool-dark.png" class="summary-logo" alt="Wsool" onerror="this.style.display='none'">
+        </picture>
+        Wsool
+      </div>
+      <div class="summary-inactive">لا إنفاق أمس</div>
+    </div>
+
+  </div>
+
+  <!-- Alerts -->
+  <div class="section-label">تنبيهات</div>
+  <div class="alerts-wrap">
+    <div class="alert">
+      <span class="alert-icon">⚠️</span>
+      <div><strong>فلوكة</strong> — CPR المحادثات أمس (₺63.26) أعلى بـ 79% من الـ lifetime المجمّع (₺35.28). يستحق مراجعة الكريتيف.</div>
+    </div>
+    <div class="alert">
+      <span class="alert-icon">⚠️</span>
+      <div><strong>فلوكة — حملة عرض الكيلو</strong> — Frequency وصل 4.40 → تعب جمهور. يُنصح بتجديد الكريتيف أو توسيع الجمهور.</div>
+    </div>
+    <div class="alert">
+      <span class="alert-icon">⚠️</span>
+      <div><strong>Edvion</strong> — CPR التحويلات أمس (₺209) أعلى بـ 200% من الـ lifetime (₺69.6). يوم ضعيف — راقب يومين قبل التعديل.</div>
     </div>
   </div>
 
-  <!-- Brand Cards -->
-
-  <div class="brand-card" style="--brand-color:#e8a020">
-    <div class="brand-header" onclick="this.closest('.brand-card').classList.toggle('open')">
+  <!-- ===== FELUKA ===== -->
+  <div class="brand-card open" style="--brand-color:#e8a020" id="c-feluka">
+    <div class="brand-header" onclick="document.getElementById('c-feluka').classList.toggle('open')">
       <div class="brand-identity">
-        
         <picture>
           <source srcset="logos/feluka-white.png" media="(prefers-color-scheme: dark)">
-          <img src="logos/feluka-color.png" alt="فلوكة" class="brand-logo">
+          <img src="logos/feluka-color.png" class="brand-logo" alt="فلوكة" onerror="this.style.display='none'">
         </picture>
         <span class="brand-name">فلوكة</span>
       </div>
       <div class="brand-pills">
-        
-            <span class="pill pill-spend">₺569.35</span>
-            <span class="pill pill-result">9 رسالة</span>
-            <span class="pill pill-cpr">₺63.26/رسالة</span>
-        
+        <span class="pill pill-spend">₺569.35</span>
+        <span class="pill pill-warn">9 محادثات ⚠️</span>
+        <span class="pill pill-cpr">₺63.26/محادثة</span>
         <span class="chevron">▾</span>
       </div>
     </div>
     <div class="brand-body">
-      <div class="camp-alert">⚠️ CPR أمس أعلى بـ 37% عن الـ Lifetime في «حملات للعرب في إسطنبول Ca»</div><div class="camp-alert">⚠️ CPR أمس أعلى بـ 169% عن الـ Lifetime في «حملة عرض الكيلو فيديو»</div><div class="camp-alert">⚠️ Frequency 4.4 في «حملة عرض الكيلو فيديو» — تعب جمهور</div>
-      
-      <table class="camp-table">
-        <thead><tr><th>الحملة</th><th>الأداء</th></tr></thead>
-        <tbody>
-        <tr>
-          <td>
-            <div class="camp-name">حملات للعرب في إسطنبول Campaign</div>
-            <div class="camp-obj">تفاعل | ₺39,608.01</div>
-          </td>
-          <td>
-                <div class="metric-row">
-                    <span class="metric-label">Lifetime</span>
-                    <span class="metric-val">856 رسالة | ₺46.27/رسالة</span>
-                </div><div class="metric-row"><span class="metric-label">CPR أمس</span><span class="delta-bad">↑ 37% أعلى ⚠️</span></div><div class="metric-row"><span class="metric-label">Frequency</span><span class="metric-val">3.47</span></div></td>
-        </tr>
-        <tr>
-          <td>
-            <div class="camp-name">حملة عرض الكيلو فيديو</div>
-            <div class="camp-obj">تفاعل | ₺18,739.08</div>
-          </td>
-          <td>
-                <div class="metric-row">
-                    <span class="metric-label">Lifetime</span>
-                    <span class="metric-val">798 رسالة | ₺23.48/رسالة</span>
-                </div><div class="metric-row"><span class="metric-label">CPR أمس</span><span class="delta-bad">↑ 169% أعلى ⚠️</span></div><div class="metric-row"><span class="metric-label">Frequency</span><span class="metric-val" style="color:#f87171">4.40</span></div></td>
-        </tr></tbody>
-      </table>
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-lbl">الإنفاق</div>
+          <div class="stat-val num">₺569.35</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-lbl">الوصول</div>
+          <div class="stat-val num">5,525</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-lbl">Impressions</div>
+          <div class="stat-val num">7,599</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-lbl">محادثات</div>
+          <div class="stat-val num">9</div>
+          <div class="stat-cpr">₺63.26/محادثة</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-lbl">كليكات</div>
+          <div class="stat-val num">33</div>
+          <div class="stat-cpr">₺17.25/كليك</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-lbl">مشاهدات</div>
+          <div class="stat-val num">591</div>
+          <div class="stat-cpr">₺0.96/مشاهدة</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-lbl">تفاعل</div>
+          <div class="stat-val num">632</div>
+          <div class="stat-cpr">₺0.90/تفاعل</div>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>الحملة</th>
+              <th>الإنفاق LT</th>
+              <th>المحادثات LT</th>
+              <th>CPR LT</th>
+              <th>Frequency</th>
+              <th>تقييم</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="camp-name-cell">حملات للعرب في إسطنبول</div>
+                <div class="camp-obj">تفاعل (رسائل)</div>
+              </td>
+              <td class="num">₺39,608</td>
+              <td class="num">856</td>
+              <td class="num">₺46.27</td>
+              <td class="num">3.47</td>
+              <td><span class="badge badge-gray">طبيعي</span></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="camp-name-cell">حملة عرض الكيلو فيديو</div>
+                <div class="camp-obj">تفاعل (رسائل)</div>
+              </td>
+              <td class="num">₺18,739</td>
+              <td class="num">798</td>
+              <td class="num">₺23.48</td>
+              <td class="num freq-warn">4.40 ⚠️</td>
+              <td><span class="badge badge-orange">يحتاج مراجعة</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight">
+        💡 CPR المحادثات أمس (₺63.26) أعلى بـ 79% من الـ lifetime المجمّع (₺35.28). حملة الكيلو freq=4.4 — ابدأ باختبار كريتيف جديد وفكّر في توسيع الجمهور لتخفيف التعب.
+      </div>
     </div>
   </div>
 
-  <div class="brand-card" style="--brand-color:#2563eb">
-    <div class="brand-header" onclick="this.closest('.brand-card').classList.toggle('open')">
+  <!-- ===== EDVION ===== -->
+  <div class="brand-card open" style="--brand-color:#2563eb" id="c-edvion">
+    <div class="brand-header" onclick="document.getElementById('c-edvion').classList.toggle('open')">
       <div class="brand-identity">
-        
         <picture>
           <source srcset="logos/edvion-light.png" media="(prefers-color-scheme: dark)">
-          <img src="logos/edvion-dark.png" alt="Edvion (Kiief)" class="brand-logo">
+          <img src="logos/edvion-dark.png" class="brand-logo" alt="Edvion" onerror="this.style.display='none'">
         </picture>
         <span class="brand-name">Edvion (Kiief)</span>
       </div>
       <div class="brand-pills">
-        
-            <span class="pill pill-spend">₺626.99</span>
-            <span class="pill pill-result">42 كليك</span>
-            <span class="pill pill-cpr">₺14.93/كليك</span>
-        
+        <span class="pill pill-spend">₺626.99</span>
+        <span class="pill pill-warn">3 تحويلات ⚠️</span>
+        <span class="pill pill-cpr">₺209/تحويل</span>
         <span class="chevron">▾</span>
       </div>
     </div>
     <div class="brand-body">
-      <div class="camp-alert">⚠️ CPR أمس أعلى بـ 128% عن الـ Lifetime في «حملة وعي ومتابعين»</div>
-      
-      <table class="camp-table">
-        <thead><tr><th>الحملة</th><th>الأداء</th></tr></thead>
-        <tbody>
-        <tr>
-          <td>
-            <div class="camp-name">‎الدروس الأونلاين‎ - Broad</div>
-            <div class="camp-obj">ليدز | ₺16,079.22</div>
-          </td>
-          <td>
-                <div class="metric-row">
-                    <span class="metric-label">Lifetime</span>
-                    <span class="metric-val">1,042 كليك | ₺15.43/كليك</span>
-                </div><div class="metric-row"><span class="metric-label">CPR أمس</span><span class="delta-ok">↓ 3%</span></div><div class="metric-row"><span class="metric-label">Frequency</span><span class="metric-val">1.61</span></div></td>
-        </tr>
-        <tr>
-          <td>
-            <div class="camp-name">‎‎‎الدروس الأونلاين‎ -  Lookalike</div>
-            <div class="camp-obj">ليدز | ₺12,679.18</div>
-          </td>
-          <td>
-                <div class="metric-row">
-                    <span class="metric-label">Lifetime</span>
-                    <span class="metric-val">549 كليك | ₺23.1/كليك</span>
-                </div><div class="metric-row"><span class="metric-label">CPR أمس</span><span class="delta-good">↓ 35% أقل ✓</span></div><div class="metric-row"><span class="metric-label">Frequency</span><span class="metric-val">1.57</span></div></td>
-        </tr>
-        <tr>
-          <td>
-            <div class="camp-name">حملة وعي ومتابعين</div>
-            <div class="camp-obj">وعي | ₺1,663.87</div>
-          </td>
-          <td>
-                <div class="metric-row">
-                    <span class="metric-label">Lifetime</span>
-                    <span class="metric-val">254 كليك | ₺6.55/كليك</span>
-                </div><div class="metric-row"><span class="metric-label">CPR أمس</span><span class="delta-bad">↑ 128% أعلى ⚠️</span></div><div class="metric-row"><span class="metric-label">Frequency</span><span class="metric-val">1.25</span></div></td>
-        </tr></tbody>
-      </table>
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-lbl">الإنفاق</div>
+          <div class="stat-val num">₺626.99</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-lbl">الوصول</div>
+          <div class="stat-val num">25,582</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-lbl">تحويلات</div>
+          <div class="stat-val num">3</div>
+          <div class="stat-cpr">₺209/تحويل</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-lbl">كليكات</div>
+          <div class="stat-val num">42</div>
+          <div class="stat-cpr">₺14.93/كليك</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-lbl">Landing Page</div>
+          <div class="stat-val num">7</div>
+          <div class="stat-cpr">₺89.57/LPV</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-lbl">View Content</div>
+          <div class="stat-val num">9</div>
+          <div class="stat-cpr">₺69.67/VC</div>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>الحملة</th>
+              <th>الهدف</th>
+              <th>الإنفاق LT</th>
+              <th>Custom Conv LT</th>
+              <th>CPR LT</th>
+              <th>Frequency</th>
+              <th>تقييم</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="camp-name-cell">الدروس الأونلاين — Broad</div>
+                <div class="camp-obj">ليدز</div>
+              </td>
+              <td>Leads</td>
+              <td class="num">₺16,079</td>
+              <td class="num">249</td>
+              <td class="num">₺64.58</td>
+              <td class="num">1.61</td>
+              <td><span class="badge badge-gray">طبيعي</span></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="camp-name-cell">الدروس الأونلاين — Lookalike</div>
+                <div class="camp-obj">ليدز</div>
+              </td>
+              <td>Leads</td>
+              <td class="num">₺12,679</td>
+              <td class="num">164</td>
+              <td class="num">₺77.31</td>
+              <td class="num">1.57</td>
+              <td><span class="badge badge-gray">طبيعي</span></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="camp-name-cell">حملة وعي ومتابعين</div>
+                <div class="camp-obj">وعي</div>
+              </td>
+              <td>Awareness</td>
+              <td class="num">₺1,664</td>
+              <td class="num">—</td>
+              <td class="num">—</td>
+              <td class="num">1.25</td>
+              <td><span class="badge badge-green">ممتاز</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight">
+        💡 3 تحويلات فقط أمس بـ 42 كليك و7 LPV فقط → معدل تحويل الموقع 16% (ضعيف). الكليكات جيدة لكن الموقع لا يحوّل. تحقق من سرعة الـ landing page وتجربة المستخدم.
+      </div>
     </div>
   </div>
 
-  <div class="brand-card" style="--brand-color:#7c3aed">
-    <div class="brand-header" onclick="this.closest('.brand-card').classList.toggle('open')">
+  <!-- ===== MUSTAKBAL ===== -->
+  <div class="brand-card open" style="--brand-color:#7c3aed" id="c-mustakbal">
+    <div class="brand-header" onclick="document.getElementById('c-mustakbal').classList.toggle('open')">
       <div class="brand-identity">
-        
         <picture>
           <source srcset="logos/mustakbal-white.png" media="(prefers-color-scheme: dark)">
-          <img src="logos/mustakbal-color.png" alt="مستقبل" class="brand-logo">
+          <img src="logos/mustakbal-color.png" class="brand-logo" alt="مستقبل" onerror="this.style.display='none'">
         </picture>
         <span class="brand-name">مستقبل</span>
       </div>
       <div class="brand-pills">
-        
-            <span class="pill pill-spend">₺393.18</span>
-            <span class="pill pill-result">7 رسالة</span>
-            <span class="pill pill-cpr">₺56.17/رسالة</span>
-        
+        <span class="pill pill-spend">₺393.18</span>
+        <span class="pill pill-good">4,449 كليك ✓</span>
+        <span class="pill pill-cpr">₺0.088/كليك</span>
         <span class="chevron">▾</span>
       </div>
     </div>
     <div class="brand-body">
-      
-      
-      <table class="camp-table">
-        <thead><tr><th>الحملة</th><th>الأداء</th></tr></thead>
-        <tbody>
-        <tr>
-          <td>
-            <div class="camp-name">حملة رسائل Campaign</div>
-            <div class="camp-obj">تفاعل | ₺1,923.71</div>
-          </td>
-          <td>
-                <div class="metric-row">
-                    <span class="metric-label">Lifetime</span>
-                    <span class="metric-val">24 رسالة | ₺80.15/رسالة</span>
-                </div><div class="metric-row"><span class="metric-label">CPR أمس</span><span class="delta-good">↓ 30% أقل ✓</span></div><div class="metric-row"><span class="metric-label">Frequency</span><span class="metric-val">1.75</span></div></td>
-        </tr>
-        <tr>
-          <td>
-            <div class="camp-name">أول حملة وعي</div>
-            <div class="camp-obj">كليكات | ₺1,715.95</div>
-          </td>
-          <td>
-                <div class="metric-row">
-                    <span class="metric-label">Lifetime</span>
-                    <span class="metric-val">4 رسالة | ₺428.99/رسالة</span>
-                </div><div class="metric-row"><span class="metric-label">CPR أمس</span><span class="delta-good">↓ 87% أقل ✓</span></div><div class="metric-row"><span class="metric-label">Frequency</span><span class="metric-val">1.24</span></div></td>
-        </tr></tbody>
-      </table>
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-lbl">الإنفاق</div>
+          <div class="stat-val num">₺393.18</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-lbl">الوصول</div>
+          <div class="stat-val num">167,870</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-lbl">Impressions</div>
+          <div class="stat-val num">231,730</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-lbl">كليكات</div>
+          <div class="stat-val num">4,449</div>
+          <div class="stat-cpr">₺0.088/كليك ✅</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-lbl">تفاعل</div>
+          <div class="stat-val num">4,811</div>
+          <div class="stat-cpr">₺0.082/تفاعل</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-lbl">محادثات</div>
+          <div class="stat-val num">7</div>
+          <div class="stat-cpr">₺56.17/محادثة</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-lbl">لايكات</div>
+          <div class="stat-val num">16</div>
+          <div class="stat-cpr">₺24.57/لايك</div>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>الحملة</th>
+              <th>الهدف</th>
+              <th>الإنفاق LT</th>
+              <th>الكليكات LT</th>
+              <th>CPR كليك LT</th>
+              <th>Frequency</th>
+              <th>تقييم</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="camp-name-cell">حملة رسائل Campaign</div>
+                <div class="camp-obj">تفاعل</div>
+              </td>
+              <td>Engagement</td>
+              <td class="num">₺1,924</td>
+              <td class="num">20,575</td>
+              <td class="num">₺0.093</td>
+              <td class="num">1.75</td>
+              <td><span class="badge badge-green">ممتاز</span></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="camp-name-cell">أول حملة وعي</div>
+                <div class="camp-obj">كليكات</div>
+              </td>
+              <td>Link Clicks</td>
+              <td class="num">₺1,716</td>
+              <td class="num">6,331</td>
+              <td class="num">₺0.271</td>
+              <td class="num">1.24</td>
+              <td><span class="badge badge-green">ممتاز</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight">
+        💡 أداء استثنائي — كليك بـ ₺0.088 على وصول 167K وهو أفضل بـ 35% من الـ lifetime (₺0.135). فكّر في رفع الميزانية للاستفادة من هذه الكفاءة.
+      </div>
     </div>
   </div>
 
-  <div class="brand-card" style="--brand-color:#059669">
-    <div class="brand-header" onclick="this.closest('.brand-card').classList.toggle('open')">
+  <!-- ===== ADVENTURERS ===== -->
+  <div class="brand-card" style="--brand-color:#059669" id="c-adv">
+    <div class="brand-header" onclick="document.getElementById('c-adv').classList.toggle('open')">
       <div class="brand-identity">
         <span class="brand-emoji">🏕️</span>
         <span class="brand-name">المغامرون</span>
@@ -369,18 +583,17 @@ footer { text-align: center; padding: 32px 0 20px; font-size: .72rem; color: var
       </div>
     </div>
     <div class="brand-body">
-      
-      <p class='no-data'>لا توجد حملات نشطة</p>
+      <div style="padding:16px 20px 20px; color:var(--text3); font-size:.85rem;">لا توجد حملات نشطة.</div>
     </div>
   </div>
 
-  <div class="brand-card" style="--brand-color:#0891b2">
-    <div class="brand-header" onclick="this.closest('.brand-card').classList.toggle('open')">
+  <!-- ===== WSOOL ===== -->
+  <div class="brand-card" style="--brand-color:#0891b2" id="c-wsool">
+    <div class="brand-header" onclick="document.getElementById('c-wsool').classList.toggle('open')">
       <div class="brand-identity">
-        
         <picture>
           <source srcset="logos/wsool-light.png" media="(prefers-color-scheme: dark)">
-          <img src="logos/wsool-dark.png" alt="Wsool وصول" class="brand-logo">
+          <img src="logos/wsool-dark.png" class="brand-logo" alt="Wsool" onerror="this.style.display='none'">
         </picture>
         <span class="brand-name">Wsool وصول</span>
       </div>
@@ -390,22 +603,15 @@ footer { text-align: center; padding: 32px 0 20px; font-size: .72rem; color: var
       </div>
     </div>
     <div class="brand-body">
-      
-      <p class='no-data'>لا توجد حملات نشطة</p>
+      <div style="padding:16px 20px 20px; color:var(--text3); font-size:.85rem;">لا توجد حملات نشطة.</div>
     </div>
   </div>
 
 </div>
 
 <footer>
-  <div style="margin-bottom:6px;font-size:.8rem;color:var(--text2)">تقرير آلي يومي</div>
-  <div>تصميم وتنفيذ <a href="https://wsool.ai" style="color:#0891b2;text-decoration:none;font-weight:600">Wsool للتسويق والأتمتة</a></div>
-  <div style="margin-top:4px">2026-05-13 02:02 UTC</div>
+  تصميم وتنفيذ <a href="https://wsool.ai" target="_blank">Wsool للتسويق والأتمتة</a> — wsool.ai
 </footer>
 
-<script>
-// Open first card by default
-document.querySelector('.brand-card')?.classList.add('open');
-</script>
 </body>
 </html>
